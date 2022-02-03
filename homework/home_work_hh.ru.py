@@ -251,22 +251,100 @@ close — цена закрытия (последний зафиксирован
 hh_data['Обновление резюме'] = pd.to_datetime(hh_data['Обновление резюме'])
 hh_data['Дата'] = hh_data['Обновление резюме'].dt.date
 
-# В тот же формат привести признак date из таблицы с валютами.
-df_currency['date'] = pd.to_datetime(df_currency['date'])
 
-# Выделить из столбца «ЗП» сумму желаемой заработной платы и наименование валюты, в которой она исчисляется. 
+
+# Выделить из столбца «ЗП» сумму желаемой заработной платы 
+# и наименование валюты, в которой она исчисляется. 
+
+#Функция выделения валюты
+def get_currency(args):
+    args_splited = args.split(' ')
+    currency_salary = None
+    for i in range(len(args_splited)):
+        if args_splited[i].isalpha():
+            currency_salary = args_splited[i]
+        return args_splited[1]
+
+hh_data['Валюта'] = hh_data['ЗП'].apply(get_currency)
+
+# Посмотреть кол-во по каждой валюте 
+hh_data.groupby(['Валюта']).count()['ЗП']
+
+# Функция отсечения наименования валюты от суммы
 def get_salary(args):
-    args_splited = args.split(',')
+    args_splited = args.split(' ')
     for i in range(len(args_splited)):
         if args_splited[i].isdigit():
             salary = int(args_splited[i])
-        else:
-            cur = args_splited[i]
-    return salary, cur
+    return salary
 
 
+hh_data['ЗП'] = hh_data['ЗП'].apply(get_salary)
 
-# Наименование валюты перевести в стандарт ISO согласно таблице выше.
+
+# Скачиваем датасэт с курсами валют
+df_currency = pd.read_csv('https://www.dropbox.com/s/kik91sgee5jhiz6/ExchangeRates.csv?raw=true', sep=',')
+df_currency['date'] = pd.to_datetime(df_currency['date'])              # Преобразовываем в формат datetime
+
+# Получить список валют
+list_currencies = df_currency.groupby(df_currency['currency']).mean().reset_index()['currency']
+
+# Наименование валюты перевести в стандарт ISO согласно таблице.
+# Cловарь валют для замены
+currency_dict = {
+    'грн.':	'UAH',
+    'USD':	'USD',
+    'EUR':	'EUR',
+    'бел.руб.':	'BYN',
+    'KGS':	'KGS',
+    'сум':	'UZS',
+    'AZN':	'AZN',
+    'KZT':	'KZT',
+    'руб.':	'RUB'
+}
+
+# Функция замены наименования валюты
+hh_data['Валюта'] = hh_data['Валюта'].apply(lambda x: currency_dict[x])
+
+
+# Привести размер зарплаты к рублю
+def get_salary_rub(args):
+    sum = args[0] 
+    data = args[1] 
+    currency = args[2]
+    if currency == 'RUB':
+        return sum
+    if currency == 'UAH':
+        pass
+    if currency == 'USD':
+        pass
+    if currency == 'EUR':
+        pass
+    if currency == 'BYN':
+        pass
+    if currency == 'KGS':
+        pass
+    if currency == 'UZS':
+        pass
+    if currency == 'AZN':
+        pass
+    if currency == 'KZT':
+        pass 
+    return salary
+    
+    
+hh_data['ЗП (руб)'] = hh_data[['ЗП', 'Дата', 'Валюта']].apply(get_salary_rub, axis=1)
+
+# Создать список с названиями столбцов
+cols = df.columns.tolist()
+
+# Переупорядочивайте cols любым способом. Вот как я переместил последний элемент в первую позицию:
+cols = cols[-1:] + cols[:-1]
+
+# Затем измените порядок данных так:
+df = df[cols]  #    OR    df = df.ix[:, cols]
+
+
 """
 if __name__ == '__main__':
     experience_col = pd.Series([

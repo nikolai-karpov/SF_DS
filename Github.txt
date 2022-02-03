@@ -1,0 +1,13 @@
+# https://training.github.com/downloads/ru/github-git-cheat-sheet/
+# https://git-scm.com/book/ru/v2
+git config --global user.name "Name"
+git config --global user.email email@example.ru
+git init
+git status
+git list
+git add -A
+git commit -m "update"
+git clone https://github.com/nikolai_karpov/SF-projects.git
+git push
+git pull
+https://github.com/nikolai-karpov/Python.git

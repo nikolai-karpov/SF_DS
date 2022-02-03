@@ -3,4 +3,4 @@ From the [SkillFactory Data Science courses] (https://skillfactiry.ru/data-scien
 
 ## Проекты
 
-* [Проект 0. Игра: Угадай число] https://github.com/nikolai-karpov/sf_data_science/blob/main/project0/game_v2.py
+* [Проект 0. Игра: Угадай число] https://github.com/nikolai-karpov/SF_DS/blob/main/project0/game_v2.py

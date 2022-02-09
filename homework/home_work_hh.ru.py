@@ -1,4 +1,3 @@
-from locale import currency
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,7 +5,7 @@ import seaborn as sns
 import plotly.express as px
 
 
-hh_data = pd.read_csv('/Volumes/HDD/Dropbox/Data Science/VS CODE/dst-3.0_16_1_hh_database.csv', sep=';')
+hh_data = pd.read_csv('/Volumes/HDD/Dropbox/Data Science/VS CODE/data/dst-3.0_16_1_hh_database.csv', sep=';')
 
 
 def get_education(arg):
@@ -250,7 +249,7 @@ close — цена закрытия (последний зафиксирован
 # 1 Перевести признак «Обновление резюме» из таблицы с резюме в формат datetime и достать из него дату
 hh_data['Обновление резюме'] = pd.to_datetime(hh_data['Обновление резюме'])
 hh_data['Дата'] = hh_data['Обновление резюме'].dt.date
-
+hh_data['Дата'] = pd.to_datetime(hh_data['Дата'])
 
 
 # Выделить из столбца «ЗП» сумму желаемой заработной платы 
@@ -286,6 +285,39 @@ hh_data['ЗП'] = hh_data['ЗП'].apply(get_salary)
 df_currency = pd.read_csv('https://www.dropbox.com/s/kik91sgee5jhiz6/ExchangeRates.csv?raw=true', sep=',')
 df_currency['date'] = pd.to_datetime(df_currency['date'])              # Преобразовываем в формат datetime
 
+# Посмотреть курсы валют за день
+#     quotes_for_date = df_currency[df_currency['date'] == data].reset_index(drop = True)
+
+
+def rate_in_date(currency, data):
+    """Функция определения курса валюты в переданный день
+
+    Args:
+        currency ([str]): [код валюты ISO]
+        data ([datetime]): [дата на которую нужно определить котировку]
+
+    Returns:
+        [currency_rate]: [курс валюты]
+    """
+    currency_rate = None
+    currency_with_proportion = ['KZT', 'KGS', 'UAH', 'UZS']     # Список валют где надо учитывать пропорцию курса
+    currency_without_proportion = ['USD', 'EUR', 'BYN', 'AZN']  # Список валют где нет необходимости делить на пропорцию
+    mask_date = (df_currency['date'] == data)                   # Маска для фильтрации по дате
+    mask_cur = (df_currency['currency'] == currency)            # Маска фильтрации по валюте
+    
+    if currency == 'RUB':
+        currency_rate = 1
+    
+    if currency in currency_with_proportion:
+        currency_rate = float(df_currency[(mask_date)&(mask_cur)]['close']) / int(df_currency[(mask_date)&(mask_cur)]['proportion'])
+
+    if currency in currency_without_proportion:
+        currency_rate = float(df_currency[(mask_date)&(mask_cur)]['close'])
+
+    return currency_rate
+
+
+#df_currency[(df_currency['date'] == data)&(df_currency['currency'] == currency)]['close']
 # Получить список валют
 list_currencies = df_currency.groupby(df_currency['currency']).mean().reset_index()['currency']
 
@@ -312,37 +344,19 @@ def get_salary_rub(args):
     sum = args[0] 
     data = args[1] 
     currency = args[2]
+    rate = rate_in_date(currency, data)
+    
     if currency == 'RUB':
-        return sum
-    if currency == 'UAH':
-        pass
-    if currency == 'USD':
-        pass
-    if currency == 'EUR':
-        pass
-    if currency == 'BYN':
-        pass
-    if currency == 'KGS':
-        pass
-    if currency == 'UZS':
-        pass
-    if currency == 'AZN':
-        pass
-    if currency == 'KZT':
-        pass 
+        salary = sum
+    else:
+        salary = sum*rate
+
     return salary
     
     
 hh_data['ЗП (руб)'] = hh_data[['ЗП', 'Дата', 'Валюта']].apply(get_salary_rub, axis=1)
 
-# Создать список с названиями столбцов
-cols = df.columns.tolist()
 
-# Переупорядочивайте cols любым способом. Вот как я переместил последний элемент в первую позицию:
-cols = cols[-1:] + cols[:-1]
-
-# Затем измените порядок данных так:
-df = df[cols]  #    OR    df = df.ix[:, cols]
 
 
 """

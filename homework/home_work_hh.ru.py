@@ -643,8 +643,121 @@ fig.show()
 # Очистка данных
 
 # Найдите полные дубликаты в таблице с резюме и удалите их
-duplicates = hh_data[hh_data.duplicated()]
+duplicates = hh_data[hh_data.duplicated(subset=hh_data.columns)]
 print('Число дубликтов: {}'.format(duplicates.shape[0]))
+
 hh_data = hh_data.drop_duplicates()
 print('В результате осталось после очистки записей: {}'.format(hh_data.shape[0]))
 
+# Выведите информацию о числе пропусков в столбцах
+cols_nan_percent = hh_data.isna().sum()
+cols_with_nan = cols_nan_percent[cols_nan_percent > 0].sort_values(ascending=False)
+cols_with_nan
+
+#hh_data[hh_data['Опыт работы (месяц)'].isna() == True].reset_index()
+#null_data = hh_data.isnull().sum()
+#display(null_data[null_data > 0])
+
+
+# удалите строки, где есть пропуск в столбцах с местом работы и должностью. 
+# Пропуски в столбце с опытом работы заполните медианным значением
+
+# Создаю копию данных
+hh_data_copy = hh_data.copy()
+
+# Удаляю строчки с NaN из столбцов "Последнее/нынешнее место работы" и "Последняя/нынешняя должность"
+#hh_data_copy = hh_data_copy[~((hh_data_copy['Последнее/нынешнее место работы'].isna()) | 
+#                  (hh_data_copy['Последняя/нынешняя должность'].isna())
+#                  )]
+hh_data_copy = hh_data_copy.dropna(subset=['Последнее/нынешнее место работы', 'Последняя/нынешняя должность'])
+
+print(f'Найдено {hh_data_copy["Опыт работы (месяц)"].isna().sum()} NAN значений')
+
+# Заполняю NaN медианными значениями
+#hh_data_copy = hh_data_copy.fillna(value={'Опыт работы (месяц)': hh_data_copy['Опыт работы (месяц)'].median()})
+hh_data_copy['Опыт работы (месяц)'] = hh_data_copy['Опыт работы (месяц)'].fillna(hh_data_copy['Опыт работы (месяц)'].median())
+
+print(f'Осталось {hh_data_copy["Опыт работы (месяц)"].isna().sum()} NAN значений.')
+print('Результирующее среднее значение Опыт работы (месяц)', round(hh_data_copy['Опыт работы (месяц)'].mean(),0))
+
+# Заменяю данных на очищенные
+hh_data = hh_data_copy.copy()
+
+
+# Удалите резюме, в которых указана заработная плата либо выше 1 млн. рублей, либо ниже 1 тыс. рублей.
+# Сколько выбросов
+# Cколько соискателей ищут заработную плату выше 1 миллиона рублей.
+above_million = hh_data[hh_data['ЗП (руб)'] > 1000000].reset_index().count()
+print(f'Зарплата свыше 1 млн руб. заявлена у {above_million[1]} чел.')
+
+# Cколько соискателей указали желаемую зарплату ниже 1 тыс.рублей.
+below_thousand = hh_data[hh_data['ЗП (руб)'] < 1000].reset_index().count()
+print(f'Зарплата ниже 1 тыс.руб. заявлена у {below_thousand[1]} чел.')
+
+# Удалите резюме, в которых указана заработная плата либо выше 1 млн
+#hh_data = hh_data[~(hh_data['ЗП (руб)'] > 1000000)]
+
+# Удалите резюме, в которых указана заработная плата ниже 1 тыс. рублей
+#hh_data = hh_data[~(hh_data['ЗП (руб)'] < 1000)]
+
+outliers = hh_data[(hh_data['ЗП (руб)'] > 1e6) | (hh_data['ЗП (руб)'] < 1e3)]
+hh_data = hh_data.drop(outliers.index)
+print('Удалено: ', outliers.shape[0])
+
+
+# Найдите резюме в которых опыт работы в годах превышал возраст соискателя и удалите их из данных
+# Cколько соискателей имеют опыт превышающий их возраст
+experience_exceeds_age = hh_data[(hh_data['Опыт работы (месяц)']/12) >= hh_data['Возраст']].reset_index().count()
+print(f'Опыт превышает возраст у {experience_exceeds_age[1]} чел.')
+
+# Удалите резюме, в которых опыт превышает возраст
+#hh_data = hh_data[~((hh_data['Опыт работы (месяц)']/12) >= hh_data['Возраст'])]
+outliers = hh_data[hh_data['Опыт работы (месяц)']/12 >= hh_data['Возраст']]
+hh_data = hh_data.drop(outliers.index)
+print('Удалено: ', outliers.shape[0])  
+
+
+# построить распределение признака в логарифмическом масштабе. 
+# Добавьте к графику линии, отображающие среднее и границы интервала метода трех сигм
+#  построить распределение признака в логарифмическом масштабе
+fig, ax = plt.subplots(1, 1, figsize=(8, 4))
+log_age = np.log(hh_data['Возраст'] + 1)
+histplot = sns.histplot(log_age, bins=30, ax=ax)
+histplot.axvline(log_age.mean(), color='k', lw=2)
+histplot.axvline(log_age.mean()+4*log_age.std(), color='k', ls='--', lw=2)
+histplot.axvline(log_age.mean()-3*log_age.std(), color='k', ls='--', lw=2)
+histplot.set_title('логарифмическое распределение');
+
+plt.show()
+
+# Найдите выбросы с помощью метода z-отклонения
+def outliers_z_score(data, feature, left=3, right=3, log_scale=False):
+    """Функция поиска выбросов с помощью метода z-отклонения 
+
+    Args:
+        data (DataFrame): Датасет в котором будут анализироваться выбросы
+        feature (str): Данные признака по которому анализируются выбросы
+        left (int, optional): Колличество сигм левой границы интервала. Defaults to 3.
+        right (int, optional): Колличество сигм правой границы интервала. Defaults to 3.
+        log_scale (bool, optional): _description_. Defaults to False.
+
+    Returns:
+        DataFrame:  outliers - Число выбросов по методу z-отклонения
+                    cleaned - очищенный датасет
+    """
+    if log_scale:
+        x = np.log(data[feature]+1)
+    else:
+        x = data[feature]
+    mu = x.mean()
+    sigma = x.std()
+    lower_bound = mu - left * sigma
+    upper_bound = mu + right * sigma
+    outliers = data[(x < lower_bound) | (x > upper_bound)]
+    cleaned = data[(x > lower_bound) & (x < upper_bound)]
+    return outliers, cleaned
+
+
+outliers, cleaned = outliers_z_score(hh_data, 'Возраст', left=3,  right=4, log_scale=False)
+print(f'Число выбросов по методу z-отклонения: {outliers.shape[0]}')
+print(f'Результирующее число записей: {cleaned.shape[0]}')

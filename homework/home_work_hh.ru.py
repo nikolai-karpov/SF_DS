@@ -461,13 +461,13 @@ ax1.set_ylabel('Кол-во чел.', fontsize=12)
 plt.show()
 
 
-# Альтернативное отображение
+# Альтернативное отображение. Но в нем нет кол-ва чел по оси Y
 fig = px.histogram(
     data_frame=hh_data,
     x='Возраст',
     title='Распределение возраста соискателей',
     histnorm='percent',
-    width=500,
+    width=1000,
     marginal='box',
 )
 fig.show()

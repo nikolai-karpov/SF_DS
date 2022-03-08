@@ -4,8 +4,8 @@ from pprint import pprint # Импортируем функцию pprint()
 # ОТКРЫВАЕМ JSON-ФАЙЛ
 
 # десериализация (декодирование данных)
-with open('homework/data/recipes.json') as f: # Открываем файл и связываем его с объектом "f"
-    recipes = json.load(f) # Загружаем содержимое открытого файла в переменную recipes
+with open('homework/data/recipes.json') as f:   # Открываем файл и связываем его с объектом "f"
+    recipes = json.load(f)                      # Загружаем содержимое открытого файла в переменную recipes
     
 #pprint(recipes) # Выводим на экран содержимое переменной recipes, используя функция pprint()
 
@@ -63,3 +63,13 @@ print(max(answer, key=answer.get)) # Извлекаем значения для 
                                     # выбираем самое максимальное значение (при наличии одинаковых значений будет выбрано первое в словаре) 
                                     # и выводим на экран ключ максимального значения
           
+
+# ИЗ JSON В PANDAS
+import pandas as pd             # Импортируем модуль pandas
+
+df = pd.DataFrame(recipes)      # Создаём объект DataFrame из списка recipes 
+
+# Для непосредственного считывания содержимого файла используйте функцию read_json() 
+df = pd.read_json('homework/data/recipes.json') # Создаём объект DataFrame, загружая содержимое файла recipes.json
+print(df.info())                # Выводим на экран первые строки полученного DataFrame
+

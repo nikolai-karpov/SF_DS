@@ -6,14 +6,13 @@ df = pd.read_json('homework/data/recipes.json') # Создаём объект Da
 all_ingredients = set() # Создаем пустое множество для хранения реестра уникальных ингредиентов
 
 # Организуем цикл, в котором будем перебирать наименования всех ингредиентов DataFrame 
-
-for ingredients in df['ingredients']:   # Начинаем перебор всех ингредиентов, входящих в состав текущего блюда
-    for ingredient in ingredients:
-        all_ingredients.add(ingredient)
+for ingredients in df['ingredients']:                               # Начинаем перебор всех блюд входящих в список
+    for ingredient in ingredients:    # Начинаем перебор всех ингредиентов, входящих в состав текущего блюда
+        all_ingredients.add(ingredient )        # Добавляем уникальный ингредиент в реестр
     
 
 # Какое количество уникальных ингредиентов в нашем DataFrame?
-print('Кол-во уникальных ингредиентов: ', len(all_ingredients))
+#print('Кол-во уникальных ингредиентов: ', len(all_ingredients))
 
 
 # Создание и заполнение столбцов
@@ -34,8 +33,9 @@ def contains(ingredient_list):
 
 
 # Для каждого ингредиента создадим в DataFrame столбец с соответствующим названием 
-for ingredient_name in all_ingredients: # Последовательно перебираем ингредиенты в реестре all_ingredients
+for ingredient_name in all_ingredients:                     # Последовательно перебираем ингредиенты в реестре all_ingredients
     df[ingredient_name] = df['ingredients'].apply(contains) # В DataFrame cоздаем столбец с именем текущего ингредиента применив к столбцу ingredients функцию, созданную нами на предыдущем этапе
                                                             # и заполняем его единицами и нулями, используя ранее созданную функцию contains
                                                             
 df['ingredients'] = df['ingredients'].apply(len)            # Заменяем список ингредиентов в рецепте на их количество 
+print(df)

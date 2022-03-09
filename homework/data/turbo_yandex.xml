@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:yandex="http://news.yandex.ru"
+     xmlns:media="http://search.yahoo.com/mrss/"
+     xmlns:turbo="http://turbo.yandex.ru"
+     version="2.0">
+  <channel>
+    <title>Турбо-страница ПИР-Система</title>
+      <link>http://www.pir-s.ru</link>
+      <description>Экосистема для построения доверительного партнерства с заказчиком</description>
+  <language>ru
+  </language>
+    <item turbo="true">
+      <link>http://www.pir-s.ru
+      </link>
+      <turbo:content>
+        <![CDATA[
+          <header>
+            <h1>Платформа проектировщиков «ПИР-Система»</h1>
+            <h2>Экосистема внутри которой строится доверительное партнёрство заказчика и разработчика проектно-изыскательской документации
+            </h2>
+            <iframe src="https://youtu.be/2E53dLjwixM"
+              width="560"
+              height="315"
+              frameborder="0"
+              allowfullscreen="true"
+              referrerpolicy="origin"
+              hd="3">
+            </iframe>
+            <menu>
+              <a href="https://www.pir-s.ru/articles/">Публикации</a>
+              <a href="https://www.pir-s.ru/video_instructions/">Видеоинструкции</a>
+              <a href="https://www.pir-s.ru/faq/">Часто задаваемые вопросы</a>
+              <a href="https://pir-s.cloud/sign-up-with-demo">ТЕСТ-драйв</a>
+              <a href="https://pirsplatform.ru/#reviews">Отзывы</a>
+              <a href="https://pirsplatform.ru/#advantages">Преимущества</a>
+              <a href="https://pirsplatform.ru/#tariffs">Тарифные планы</a>
+              <a href="https://pirsplatform.ru/tariffs">Сравнение Тарифных планов</a>
+            </menu>
+          </header>
+          <div data-block="card"
+            <p><h2>Как ПИР-Система помогает уменьшить сроки разработки и увеличить качество документации</h2> 
+            <figure>
+              <img src="https://www.pir-s.ru/local/templates/pirs/images/temp/16.jpg">
+            </figure>
+            <p><h4>Постановщик задач</h4> – адаптированный под задачи отрасли трекер задач позволяет ставить и отслеживать отработку поставленных проектной группе заданий.</p>
+            <blockquote>Обязательный, безценный инструмент при работе ГИПа по нескольким объектам одновременно.</p>
+            </blockquote><p>
+            <button
+              formaction="https://pir-s.cloud/sign-up-with-demo"
+              data-background-color="#f6861a"
+              data-color="white"
+              data-turbo="false"
+              data-primary="true"
+              >
+              Пробовать бесплатно
+            </button>
+          </div>
+          <figure>
+            <img src="https://www.pir-s.ru/local/templates/pirs/images/temp/17.jpg">
+          </figure>
+          <h4>Решает задачи с кадровым дефицитом</h4>
+          <p> – для профессиональных участников отрасли реализован функционал выбора надежных партнеров в соответствии сложности проекта, который позволяет контролировать весь жизненный цикл разработки проектно-изыскательской документации, экономить время и увеличивать доход благодаря здоровой конкуренции
+	        </p>
+          <blockquote> ПИР–Системе рейтинг невозможно купить, только заработать. ПИР-Система — это полноценный инструмент для удаленной работы проектных групп.</p>
+          </blockquote><p>
+          <button
+            formaction="https://pir-s.cloud/sign-up-with-demo"
+            data-background-color="#f6861a"
+            data-color="white"
+            data-turbo="false"
+            data-primary="true"
+            >
+            Пробовать бесплатно
+          </button>
+          <div data-block="card"
+            <figure>
+              <img src="https://www.pir-s.ru/local/templates/pirs/images/temp/22.jpg">
+            </figure>
+            <p><h4>Безопасная сделка</h4>- на платформе реализованы смарт-контракты, гарантирующие, что исполнители выполнят работу в срок и в полном объеме, а заказчики выплатят вознаграждение согласно договору</p>
+            <blockquote>Открывает возможность отдать новым подрядчикам исполнение раздела без риска потерять деньги. Благодаря тендерным процедурам справедливые расценки.</p>
+            </blockquote><p>
+            <button
+              formaction="https://pir-s.cloud/sign-up-with-demo"
+              data-background-color="#f6861a"
+              data-color="white"
+              data-turbo="false"
+              data-primary="true"
+              >
+              Пробовать бесплатно
+            </button>
+          </div>
+          <figure>
+            <img src="https://www.pir-s.ru/local/templates/pirs/images/temp/19.jpg">
+          </figure>
+          <p><h4>Актуальная версия чертежей на расстоянии клика</h4>- платформа позволяет хранить сопроводительную документацию проектируемых объектов системно по стадиям, в соответствии с составом проекта, не теряя связи с исполнителями разделов.</p>
+          <button
+            formaction="https://pir-s.cloud/sign-up-with-demo"
+            data-background-color="#f6861a"
+            data-color="white"
+            data-turbo="false"
+            data-primary="true"
+            >
+            Пробовать бесплатно
+          </button>
+          <div data-block="card"
+            <figure>
+              <img src="https://www.pir-s.ru/local/templates/pirs/images/temp/18.jpg">
+            </figure>
+            <p><h3>Вне зависимости от устройства и операционной системы, которые вы используете для выхода в интернет, вы сможете:</h3></p>
+            <ul>
+            <li> разместить или получить заказы на проектно-изыскательские работы;</li>
+            <li> обсудить техническое задание и технические условия до начала работ;</li>
+            <li> изучить исходные данные проектируемого объекта до принятия решения о вашем участии в проекте;</li>
+            <li> использовать инструменты для вынесения и отработки замечаний, в том числе прохождение экспертизы;</li>
+            <li> формировать пакет ПСД для подачи на экспертизу;</li>
+            <li> выполнить прием-передачу результатов работы дистанционно;</li>
+            <li> заключить “Безопасную сделку” и отслеживать её выполнение в онлайн-режиме.</li>
+            </ul>
+            <button formaction="https://pirsplatform.ru/#reviews"
+              data-background-color="#f6861a"
+              data-color="white"
+              data-turbo="false"
+              data-primary="true"
+              >Читать отзывы</button>
+            <div data-block="widget-feedback" data-stick="false">
+              <div data-type="mail" data-url="mailto:sales@pir-s.cloud"></div>
+              <div data-block="chat" data-type="telegram" data-url="https://t.me/pirsystem_bot"></div>
+              <div data-block="chat" data-type="vkontakte" data-url="https://vk.com/pirsplatform"></div>
+              <div data-block="chat" data-type="facebook" data-url="https://www.facebook.com/pirsplatform.ru/"></div>
+            </div>
+          </div>
+        ]]>
+      </turbo:content>
+    </item>
+  </channel>
+</rss>

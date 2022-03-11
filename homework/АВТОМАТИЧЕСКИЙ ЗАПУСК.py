@@ -12,7 +12,7 @@ def task():
 schedule.every(15).minutes.do(task)
 
 # Если бы мы хотели запускать задачу, например, каждый час, то могли бы написать:
-# schedule.every(1).hour.do(task) 
+schedule.every(1).hour.do(task) 
 
 
 # ВЫПОЛНЕНИЕ ФУНКЦИИ

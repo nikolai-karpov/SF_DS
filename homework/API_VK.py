@@ -21,7 +21,7 @@ token = 'c22b3e0bc22b3e0bc22b3e0b0ec250afc0cc22bc22b3e0ba001682b457a61bc5e48e073
     на все остальные запросы без корректного токена система отвечает отказом.
 
 """
-"""
+
 url = 'https://api.vk.com/method/users.get'         # Указываем адрес страницы к которой делаем запрос
 
 # Перечисляем параметры нашего запроса в словаре params
@@ -31,13 +31,13 @@ params = {'user_id': 1,
           'access_token': token, 
           'lang': 'ru'} 
 
-#response = requests.get(url, params=params) # Отправляем запрос
-#print(response.text) # Выводим текст ответа на экран
+response = requests.get(url, params=params) # Отправляем запрос
+print(response.text) # Выводим текст ответа на экран
 
-#pprint(response.json()) # Выводим содержимое словаря, содержащего ответ, на экран
+pprint(response.json()) # Выводим содержимое словаря, содержащего ответ, на экран
 
-#user = response.json()['response'][0]   # Извлекаем из словаря по ключу response информацию о первом пользователе
-#print(user['bdate'])                    # Выводим дату рождения первого пользователя на экран
+user = response.json()['response'][0]   # Извлекаем из словаря по ключу response информацию о первом пользователе
+print(user['bdate'])                    # Выводим дату рождения первого пользователя на экран
 
 
 # запрашивать информацию о множестве (до 1 000) пользователей одновременно
@@ -53,11 +53,11 @@ params = {'user_ids': ids,
 # Посылаем запрос, 
 # полученный ответ в формате JSON-строки преобразуем в словарь 
 # и выводим на экран его содержимое, используя функцию pprint()
-#pprint(requests.get(url, params=params).json()) 
+pprint(requests.get(url, params=params).json()) 
 
 
 # Используя API, определите долю женщин (sex=1) среди пользователей с id от 1 до 500
-ids = ",".join(map(str, range(1, 500)))   # Формируем строку, содержащую информацию о поле id первых трёх пользователей
+ids = ",".join(map(str, range(1, 501)))   # Формируем строку, содержащую информацию о поле id первых трёх пользователей
 params = {'user_id': ids, 
           'v': 5.95, 
           'fields': 'sex', 
@@ -66,9 +66,9 @@ params = {'user_id': ids,
 
 response = requests.get(url, params=params) # Отправляем запрос
 
-count_women = 0
-count_men = 0
-for i in range(0, 499):
+count_women=count_men=0
+
+for i in range(0, 501):
     user = response.json()['response'][i]       # Извлекаем из словаря по ключу response информацию о текущем пользователе
     if user['sex'] == 1:
         count_women += 1
@@ -142,9 +142,9 @@ while offset < 5000:
     offset += count 
     print('Ожидаю 0.5 секунды...') 
     time.sleep(0.5) 
-#print('Цикл завершен, offset =',offset) 
+print('Цикл завершен, offset =',offset) 
 
-"""
+
 # ЛАЙКИ, РЕПОСТЫ И КОММЕНТАРИИ
 # Для получения информации о сообщениях на стене в API ВКонтакте предусмотрен метод wall.get.
 url = 'https://api.vk.com/method/wall.get' # Указываем адрес страницы, к которой делаем запрос
@@ -159,10 +159,10 @@ params = {'domain': 'dwgformat',
           'v': 5.95
           } 
 response = requests.get(url, params = params) 
-#pprint(response.json()) 
+pprint(response.json()) 
 
 # Посмотрим на информацию об отдельном сообщении:
-#pprint(response.json()['response']['items'][0])
+pprint(response.json()['response']['items'][0])
 
 
 # соберём итоговую статистику для последних десяти непустых сообщений в словарь stats

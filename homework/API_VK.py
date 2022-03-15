@@ -38,9 +38,9 @@ params = {'user_id': 1,
           'lang': 'ru'} 
 
 response = requests.get(url, params=params) # Отправляем запрос
-print(response.text) # Выводим текст ответа на экран
+print(response.text)        # Выводим текст ответа на экран
 
-pprint(response.json()) # Выводим содержимое словаря, содержащего ответ, на экран
+pprint(response.json())     # Выводим содержимое словаря, содержащего ответ, на экран
 
 user = response.json()['response'][0]   # Извлекаем из словаря по ключу response информацию о первом пользователе
 print(user['bdate'])                    # Выводим дату рождения первого пользователя на экран
@@ -189,3 +189,8 @@ for record in response.json()['response']['items'][:]:
     else: 
         break 
 pprint(stats)
+
+
+"""url = 'https://api.vk.com/method/friends.getLists'         # Список друзей
+response = requests.get(url, params=params) # Отправляем запрос
+print(response.text)        # Выводим текст ответа на экран"""
